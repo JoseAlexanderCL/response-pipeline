@@ -4,9 +4,13 @@ from sqlalchemy import create_engine
 
 
 def load_data(messages_filepath, categories_filepath):
+    """ Load Data from CSV Files
     
+    This function recieves the filepath of two CSV files, load the files
+    and then return the merged dataframe.    
     
-    
+    """
+        
     messages = pd.read_csv(messages_filepath)
     categories = pd.read_csv(categories_filepath, sep = ",")
     df = messages.merge(categories)
@@ -14,7 +18,7 @@ def load_data(messages_filepath, categories_filepath):
 
 
 def clean_data(df):
-    """
+    """ Cleans Data for Pipeline
     
     Cleans 
     
