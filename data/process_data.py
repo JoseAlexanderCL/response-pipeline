@@ -9,6 +9,8 @@ def load_data(messages_filepath, categories_filepath):
     This function recieves the filepath of two CSV files, load the files
     and then return the merged dataframe.    
     
+    The main attributes are Message and Categories (or labels of the message)
+    
     """
         
     messages = pd.read_csv(messages_filepath)
@@ -20,7 +22,16 @@ def load_data(messages_filepath, categories_filepath):
 def clean_data(df):
     """ Cleans Data for Pipeline
     
-    Cleans 
+    Recieves a dataframe containing message and categories then apply
+    cleaning steps:
+        1. Expand the categories field
+        2. Creates the column names for different categories
+        3. Clean category values removing extra text
+        4. Convert categories to number (0-1)
+        5. Correct issues in "related"category
+        6. Drops duplicated rows
+    
+    Returns cleaned dataframe df
     
     """
     
@@ -59,6 +70,13 @@ def clean_data(df):
 
 
 def save_data(df, database_filename):
+    """ Save clean dataframe into sqlalchemy database
+    
+    Recieves database filename and uses sqlalchemy for
+    saving a dataframe into "database_filename"
+    
+    """  
+    
     engine = create_engine('sqlite:///'+ str(database_filename))
     df.to_sql('df', engine, index=False)
 
