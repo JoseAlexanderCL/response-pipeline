@@ -10,7 +10,8 @@ from flask import Flask
 from flask import render_template, request, jsonify
 import plotly.graph_objs as go
 from plotly.graph_objs import Bar, Heatmap, Scatter
-from sklearn.externals import joblib
+#from sklearn.externals import joblib
+import joblib
 import pickle
 from sqlalchemy import create_engine
 
