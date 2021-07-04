@@ -29,4 +29,4 @@ Most of the structure of the script is thanks to Udacity's recommendations. I re
 
 ### Flask App Sample
 
-![sample](sample.png)
+![sample](image/sample.png)
