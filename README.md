@@ -27,3 +27,6 @@ Finally the run.py runs a Flask app with the design of the website and takes inp
 
 Most of the structure of the script is thanks to Udacity's recommendations. I really appreciate the provision of all the elements and resources that they make available for learning.
 
+### Flask App Sample
+
+![sample](sample.png)
