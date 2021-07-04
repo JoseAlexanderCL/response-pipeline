@@ -1,6 +1,4 @@
 import sys
-
-
 import nltk
 nltk.download(['punkt', 'wordnet'])
 
@@ -30,6 +28,10 @@ import pickle
 
 
 def load_data(database_filepath):
+    """ Returns features (X), labels (y) and category names
+    Take input to load the database from sqlite with message and categories.
+    """
+
     engine = create_engine('sqlite:///' + database_filepath)
     df = pd.read_sql_table('df',engine)
     
@@ -61,7 +63,10 @@ def tokenize(text):
 
 
 def build_model():
-    
+    """ Pipeline with Tokenizer, TFID and MultiOutput Classiffier with Random Forest
+    The hyperparameters were obtained with a Cross-Validation process
+
+    """
     
     
     pipeline = Pipeline([
@@ -83,6 +88,8 @@ def evaluate_model(model, X_test, Y_test, category_names):
 
 
 def save_model(model, model_filepath):
+    """Writes RandomForest model into a .pkl
+    """
     
     pickle.dump(model, open(model_filepath, 'wb'))
 

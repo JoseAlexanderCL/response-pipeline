@@ -6,13 +6,10 @@ from sqlalchemy import create_engine
 def load_data(messages_filepath, categories_filepath):
     """ Load Data from CSV Files
     
-    This function recieves the filepath of two CSV files, load the files
+    This function recieves the filepath of two CSV files, load the files,
     and then return the merged dataframe.    
     
-    The main attributes are Message and Categories (or labels of the message)
-    
     """
-        
     messages = pd.read_csv(messages_filepath)
     categories = pd.read_csv(categories_filepath, sep = ",")
     df = messages.merge(categories)
@@ -20,22 +17,13 @@ def load_data(messages_filepath, categories_filepath):
 
 
 def clean_data(df):
-    """ Cleans Data for Pipeline
+    """ Returns cleaned dataframe
     
-    Recieves a dataframe containing message and categories then apply
-    cleaning steps:
-        1. Expand the categories field
-        2. Creates the column names for different categories
-        3. Clean category values removing extra text
-        4. Convert categories to number (0-1)
-        5. Correct issues in "related"category
-        6. Drops duplicated rows
-    
-    Returns cleaned dataframe df
+    Separates the categories into individual columns.
+    Adds column names for categories, merge new categories with df,
+    delete duplicated rows. 
     
     """
-    
-    
     categories = df['categories'].str.split(pat=";",expand=True)
     row = categories.iloc[0]
     category_colnames = row.apply(lambda x: x[0:len(x)-2])
@@ -54,14 +42,11 @@ def clean_data(df):
 
 
     categories['related'] = categories['related'].map({0:0, 1:1, 2:0})
-    
-    df.drop(columns=['categories'],inplace=True)
-    
+    df.drop(columns=['categories'],inplace=True)    
     df = pd.concat([df,categories], axis=1,sort=False)
     
     
     #Removing duplicates
-    
     df.drop_duplicates(inplace=True)
     
     return df
@@ -70,13 +55,9 @@ def clean_data(df):
 
 
 def save_data(df, database_filename):
-    """ Save clean dataframe into sqlalchemy database
-    
-    Recieves database filename and uses sqlalchemy for
-    saving a dataframe into "database_filename"
-    
-    """  
-    
+    """Save the database into a sqlite database
+
+    """
     engine = create_engine('sqlite:///'+ str(database_filename))
     df.to_sql('df', engine, index=False)
 

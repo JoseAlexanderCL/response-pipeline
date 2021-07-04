@@ -1,5 +1,15 @@
 # Disaster Response Pipeline Project
 
+### Summary:
+
+This repo contains a worfklow for training a machine learning model on emergency related tweets, and doing inference on user input text. These results are deployed on a simple Flask app.
+
+The first script in the model take two files with the tweets and their category (label for the model), then runs a ETL
+process for cleaning the data. The second script takes this data and run a pipeline for transforming the text data and
+then train a RandomForest model. This model is saved in a .pkl file.
+
+Finally the run.py runs a Flask app with the design of the website and takes input data for estimating the category or label of the input.
+
 ### Instructions:
 1. Run the following commands in the project's root directory to set up your database and model.
 
@@ -12,3 +22,4 @@
     `python run.py`
 
 3. Go to http://0.0.0.0:3001/
+
