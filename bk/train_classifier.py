@@ -14,7 +14,6 @@ from sklearn.pipeline import Pipeline
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import classification_report
 from sklearn.model_selection import train_test_split
-from sklearn.model_selection import GridSearchCV
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.multioutput import MultiOutputClassifier
 from sklearn.neighbors import KNeighborsClassifier
@@ -71,20 +70,12 @@ def build_model():
     pipeline = Pipeline([
         ('vect', CountVectorizer(tokenizer=tokenize)),
         ('tfidf', TfidfTransformer()),
-        ('clf', MultiOutputClassifier(RandomForestClassifier()))
+        ('clf', MultiOutputClassifier(RandomForestClassifier(n_estimators=20,max_features='auto',min_samples_leaf=4, random_state=1),n_jobs=-1))
     ])
 
-    parameters = {
-    'clf__estimator__n_estimators': [10, 20],
-    'clf__estimator__min_samples_leaf':[4,8]
-    }
+    print(pipeline.get_params())
     
-    print(pipeline.get_params().keys())
-
-    cv = GridSearchCV(pipeline,param_grid=parameters)
-    
-
-    return cv
+    return pipeline
 
 
 
